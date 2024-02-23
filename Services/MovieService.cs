@@ -1,7 +1,7 @@
 ﻿using Contracts;
 using Entities.Models;
-using Microsoft.Extensions.Options;
-using Repositories.Configurations;
+using Entities.Responses;
+using Entities.Search;
 using Services.Contracts;
 
 namespace Services
@@ -13,20 +13,20 @@ namespace Services
         public MovieService(IMovieRepository repository) =>
             this.repository = repository;
 
-        public async Task<Movie> GetByTitle(string title)
+        public async Task<ApiBaseResponse> GetByTitle(SearchOptions searchOptions)
         {
-            if (string.IsNullOrWhiteSpace(title))
-                throw new ArgumentNullException(nameof(title));
+            if (!searchOptions.IsValid)
+                return new ApiBadRequestResponse($"{nameof(searchOptions.Title)} is required.");
 
             try
             {
-                var movie = await repository.GetByTitle(title);
-                return movie;
+                var movie = await repository.GetByTitle(searchOptions.Title);
+                return new ApiOkResponse<Movie>(movie);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                return new ApiBadRequestResponse(e.Message);
             }
         }
     }
