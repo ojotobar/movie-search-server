@@ -18,16 +18,11 @@ namespace Services
             if (!searchOptions.IsValid)
                 return new ApiBadRequestResponse($"{nameof(searchOptions.Title)} is required.");
 
-            try
-            {
-                var movie = await repository.GetByTitle(searchOptions.Title);
-                return new ApiOkResponse<Movie>(movie);
-            }
-            catch (Exception e)
-            {
+            var movie = await repository.GetByTitle(searchOptions.Title);
+            if (string.IsNullOrEmpty(movie.Title))
+                return new ApiNotFoundResponse($"Movie not found!");
 
-                return new ApiBadRequestResponse(e.Message);
-            }
+            return new ApiOkResponse<Movie>(movie);
         }
     }
 }

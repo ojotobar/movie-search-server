@@ -15,6 +15,11 @@ namespace MovieSearch.Controllers
                     Message = ((ApiBadRequestResponse)baseResponse).Message,
                     StatusCode = StatusCodes.Status400BadRequest
                 }),
+                ApiNotFoundResponse => BadRequest(new ErrorDetails
+                {
+                    Message= ((ApiNotFoundResponse)baseResponse).Message,
+                    StatusCode= StatusCodes.Status404NotFound
+                }),
                 _ => throw new NotImplementedException()
             };
         }

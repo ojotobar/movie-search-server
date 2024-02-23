@@ -1,5 +1,6 @@
 using Contracts;
 using Microsoft.Extensions.Options;
+using MovieSearch.Extensions;
 using Repositories;
 using Repositories.Configurations;
 using Services;
@@ -29,6 +30,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseGlobalExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
