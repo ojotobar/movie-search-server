@@ -4,6 +4,7 @@ namespace Contracts
 {
     public interface IMovieRepository
     {
-        Task<Movie> GetByTitle(string title);
+        Task<ResponseData> GetAll(string title);
+        Task<Movie> GetById(string title);
     }
 }

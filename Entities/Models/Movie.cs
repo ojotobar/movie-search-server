@@ -2,9 +2,6 @@
 {
     public class Movie
     {
-        public Movie() =>
-            Ratings = new List<Rating>();
-
         public string? Title { get; set; }
         public string? Year { get; set; }
         public string? Rated { get; set; }
@@ -21,7 +18,6 @@
         public string? ImDbVotes { get; set; }
         public string? ImDbRating { get; set; }
         public string? ImDbId { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
         public string? Type { get; set; }
     }
 }

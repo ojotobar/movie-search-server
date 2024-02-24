@@ -6,6 +6,7 @@ namespace Services.Contracts
 {
     public interface IMovieService
     {
-        Task<ApiBaseResponse> GetByTitle(SearchOptions searchOptions);
+        Task<ApiBaseResponse> Get(SearchOptions searchOptions);
+        Task<ApiBaseResponse> Get(string id);
     }
 }

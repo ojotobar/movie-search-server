@@ -13,16 +13,20 @@ namespace Services
         public MovieService(IMovieRepository repository) =>
             this.repository = repository;
 
-        public async Task<ApiBaseResponse> GetByTitle(SearchOptions searchOptions)
+        public async Task<ApiBaseResponse> Get(string id)
         {
-            if (!searchOptions.IsValid)
-                return new ApiBadRequestResponse($"{nameof(searchOptions.Title)} is required.");
-
-            var movie = await repository.GetByTitle(searchOptions.Title);
-            if (string.IsNullOrEmpty(movie.Title))
-                return new ApiNotFoundResponse($"Movie not found!");
+            var movie = await repository.GetById(id);
+            if (movie == null)
+                return new ApiNotFoundResponse($"Movie with Id: {id} not found!");
 
             return new ApiOkResponse<Movie>(movie);
+        }
+
+        public async Task<ApiBaseResponse> Get(SearchOptions searchOptions)
+        {
+            var movies = await repository.GetAll(searchOptions.Title);
+
+            return new ApiOkResponse<ResponseData>(movies);
         }
     }
 }

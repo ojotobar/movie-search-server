@@ -15,9 +15,10 @@ namespace Repositories
             this.options = options;
         }
 
-        public async Task<Movie> GetByTitle(string title)
-        {
-            return await _context.Movies.Get(options.Value.Key, title);
-        }
+        public async Task<Movie> GetById(string id) =>
+            await _context.Movies.Get(options.Value.Key, id);
+
+        public async Task<ResponseData> GetAll(string title) =>
+            await _context.Movies.GetAll(options.Value.Key, title);
     }
 }
