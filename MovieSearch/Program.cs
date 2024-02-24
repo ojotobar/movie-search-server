@@ -9,6 +9,14 @@ using Services.Contracts;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+        builder.WithOrigins("http://localhost:3000")
+            .AllowCredentials()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 builder.Services.AddSingleton<RepositoryContext>(provider =>
 {
     var options = provider.GetService<IOptions<ImDbSettings>>();
@@ -36,6 +44,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
